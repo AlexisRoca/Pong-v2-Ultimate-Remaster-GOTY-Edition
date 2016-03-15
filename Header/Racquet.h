@@ -20,7 +20,6 @@ public:
 	Racquet(float speed, float size, sf::Vector2f position);
 	
 	// Methods
-	sf::Vector2f getBoundDirection(sf::Vector2f direction, sf::Vector2f position);
 	sf::Vector2f getBoundDirection(Ball * ball);
 
 	void draw(sf::RenderWindow & window);

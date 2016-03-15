@@ -12,18 +12,6 @@ m_shape(sf::Vector2f(m_winSize/5, 20))
 	m_shape.setPosition(position);
 }
 
-sf::Vector2f Racquet::getBoundDirection(sf::Vector2f direction, sf::Vector2f position)
-{
-	float dirX = - abs(m_shape.getPosition().x + m_shape.getSize().x / 2 - position.x);
-	float dirY = - (m_shape.getPosition().y + m_shape.getSize().y / 2 - position.y);
-
-	float max = abs(dirX);
-	if (max < abs(dirY))
-		max = abs(dirY);
-
-	return sf::Vector2f(dirX/max, dirY/max);
-}
-
 sf::Vector2f Racquet::getBoundDirection(Ball * ball)
 {
 	sf::Vector2f position = ball->getPosition();
