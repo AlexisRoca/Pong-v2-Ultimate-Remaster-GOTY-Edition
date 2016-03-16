@@ -21,6 +21,8 @@ void Ball::update()
 	float moveY = m_direction.y * m_speed;
 
 	m_shape.move(sf::Vector2f(moveX, moveY));
+
+	// std::cout << m_shape.getPosition().x << " " << m_shape.getPosition().y << std::endl;
 }
 
 sf::FloatRect & Ball::getBox()

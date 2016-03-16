@@ -35,4 +35,5 @@ public:
 	void setSize(sf::Vector2f size);
 	void setSpeed(float speed);
 	void setPosition(sf::Vector2f position);
+	void setRotation(float angle);
 };

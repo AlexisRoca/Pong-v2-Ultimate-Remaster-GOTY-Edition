@@ -33,16 +33,30 @@ void Level::buildLevel()
 	m_ground.setFillColor(sf::Color::Black);
 
 	// Init balls
-	m_balls.push_back(new Ball(10, 0.1, m_centerPosition, sf::Vector2f(0.5, 1)));
+	float random = rand() % 10 - 5;
+	sf::Vector2f randomDirectionBall(rand() % 10 - 5, rand() % 10 - 5);
+	randomDirectionBall /= sqrt(randomDirectionBall.x*randomDirectionBall.x + randomDirectionBall.y*randomDirectionBall.y);
+	std::cout << randomDirectionBall.x << " " << randomDirectionBall.y << std::endl;
+	m_balls.push_back(new Ball(10, 0.1, m_centerPosition, randomDirectionBall));
 
 	// Init players
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(50, 50)));
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, 50)));
+	m_players.back()->setRight(sf::Keyboard::D);
+	m_players.back()->setLeft(sf::Keyboard::Q);
+
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(50, m_size / 2)));
+	m_players.back()->setRotation(90.0);
+	m_players.back()->setUp(sf::Keyboard::Z);
+	m_players.back()->setDown(sf::Keyboard::S);
+
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, m_size - 50)));
 	m_players.back()->setRight(sf::Keyboard::Right);
 	m_players.back()->setLeft(sf::Keyboard::Left);
 
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size - m_size / 5 - 50, m_size - 70)));
-	m_players.back()->setRight(sf::Keyboard::D);
-	m_players.back()->setLeft(sf::Keyboard::Q);
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size - 50, m_size/2)));
+	m_players.back()->setRotation(90.0);
+	m_players.back()->setUp(sf::Keyboard::Up);
+	m_players.back()->setDown(sf::Keyboard::Down);
 
 	// Init edges
 	m_edges.push_back(new Edge(m_size, 'H'));
