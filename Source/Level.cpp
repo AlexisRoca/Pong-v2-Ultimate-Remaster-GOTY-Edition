@@ -33,7 +33,7 @@ void Level::buildLevel()
 	m_ground.setFillColor(sf::Color::Black);
 
 	// Init balls
-	m_balls.push_back(new Ball(10, 0.1, m_centerPosition, sf::Vector2f(0.5, 1)));
+	m_balls.push_back(new Ball(10, 0.1, m_centerPosition, sf::Vector2f(-0.5, -1)));
 
 	// Init players
 	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(50, 50)));

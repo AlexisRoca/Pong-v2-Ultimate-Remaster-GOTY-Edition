@@ -1,5 +1,6 @@
 #include "Racquet.h"
 #include <math.h>
+#include <iostream>
 
 
 Racquet::Racquet(float speed, float size, sf::Vector2f position) :
@@ -16,15 +17,21 @@ sf::Vector2f Racquet::getBoundDirection(Ball * ball)
 {
 	sf::Vector2f position = ball->getPosition();
 	sf::Vector2f direction = ball->getDirection();
+	
+	sf::Vector2f normale = position - this->getPosition();
 
-	float dirX = -abs(m_shape.getPosition().x + m_shape.getSize().x / 2 - position.x);
-	float dirY = -(m_shape.getPosition().y + m_shape.getSize().y / 2 - position.y);
+	float cosAlpha = normale.x*-direction.x + normale.y*-direction.y; //produit scalaire entre normale et direction de la balle 
+	float sinAlpha = sin(acos(cosAlpha));
 
-	float max = abs(dirX);
-	if (max < abs(dirY))
-		max = abs(dirY);
+	std::cout << "cosAlpha: " << cosAlpha << " sinAlpha:" << sinAlpha << std::endl;
 
-	return sf::Vector2f(dirX / max, dirY / max);
+
+	sf::Vector2f reflexionDirection(normale.x*cosAlpha - sinAlpha*normale.y, normale.x*sinAlpha + normale.y*cosAlpha);
+	//reflexionDirection /= sqrt(reflexionDirection.x*reflexionDirection.x +reflexionDirection.y*reflexionDirection.y);
+
+	std::cout << "reflexionDirection - x: " << reflexionDirection.x << " y:" << reflexionDirection.y << std::endl;
+
+	return reflexionDirection;
 }
 
 void Racquet::draw(sf::RenderWindow & window)
@@ -63,7 +70,8 @@ float Racquet::getSpeed()
 
 sf::Vector2f Racquet::getPosition()
 {
-	return m_shape.getPosition();
+	return sf::Vector2f(m_shape.getPosition().x + m_shape.getSize().x/2,
+						m_shape.getPosition().y + m_shape.getSize().y/2);
 }
 
 void Racquet::setSize(sf::Vector2f size)
