@@ -15,28 +15,23 @@ m_shape(sf::Vector2f(m_winSize/5, 20))
 
 sf::Vector2f Racquet::getBoundDirection(Ball * ball)
 {
-	sf::Vector2f impactDirection(abs(ball->getPosition().x - this->getPosition().x), abs(ball->getPosition().y - this->getPosition().y));
+	sf::Vector2f position = ball->getPosition();
+	sf::Vector2f direction = ball->getDirection();
 	
-	// impactDirection = ball->getPosition() - this->getPosition();
+	sf::Vector2f normale = position - this->getPosition();
 
-	impactDirection /= sqrt(impactDirection.x*impactDirection.x + impactDirection.y*impactDirection.y);
+	float cosAlpha = normale.x*-direction.x + normale.y*-direction.y; //produit scalaire entre normale et direction de la balle 
+	float sinAlpha = sin(acos(cosAlpha));
 
-	if (ball->getPosition().x < m_winSize / 2 && impactDirection.x < 0)
-		impactDirection.x *= -1;
-	if (ball->getPosition().x > m_winSize / 2 && impactDirection.x > 0)
-		impactDirection.x *= -1;
-	if (ball->getPosition().y < m_winSize / 2 && impactDirection.y < 0)
-		impactDirection.y *= -1;
-	if (ball->getPosition().y > m_winSize / 2 && impactDirection.y > 0)
-		impactDirection.y *= -1;
-	
-	// sf::Vector2f boundDirection = -ball->getDirection();
+	std::cout << "cosAlpha: " << cosAlpha << " sinAlpha:" << sinAlpha << std::endl;
 
-	// float cosAlpha = impactDirection.x * boundDirection.x + impactDirection.y * boundDirection.y;
-	
-	std::cout << impactDirection.x << " " << impactDirection.y << std::endl;
 
-	return impactDirection;
+	sf::Vector2f reflexionDirection(normale.x*cosAlpha - sinAlpha*normale.y, normale.x*sinAlpha + normale.y*cosAlpha);
+	//reflexionDirection /= sqrt(reflexionDirection.x*reflexionDirection.x +reflexionDirection.y*reflexionDirection.y);
+
+	std::cout << "reflexionDirection - x: " << reflexionDirection.x << " y:" << reflexionDirection.y << std::endl;
+
+	return reflexionDirection;
 }
 
 void Racquet::draw(sf::RenderWindow & window)
@@ -47,22 +42,15 @@ void Racquet::draw(sf::RenderWindow & window)
 void Racquet::move(sf::Vector2f direction)
 {
 	if (m_shape.getPosition().x > 0 && m_shape.getPosition().x < m_winSize - m_shape.getSize().x)
-		if (m_shape.getPosition().y > 0 && m_shape.getPosition().y < m_winSize - m_shape.getSize().x)
-		{
-			m_shape.move(m_speed * direction);
+	{
+		m_shape.move(m_speed * direction);
 		
-			if (m_shape.getPosition().x < 0)
-				m_shape.setPosition(0.5, m_shape.getPosition().y);
+		if (m_shape.getPosition().x < 0)
+			m_shape.setPosition(0.5, m_shape.getPosition().y);
 	
-			if (m_shape.getPosition().x > m_winSize - m_shape.getSize().x)
-				m_shape.setPosition(m_winSize - m_shape.getSize().x - 0.5, m_shape.getPosition().y);
-
-			if (m_shape.getPosition().y < 0)
-				m_shape.setPosition(m_shape.getPosition().x, 0.5);
-
-			if (m_shape.getPosition().y > m_winSize - m_shape.getSize().x)
-				m_shape.setPosition(m_shape.getPosition().x, m_winSize - m_shape.getSize().x - 0.5);
-		}
+		if (m_shape.getPosition().x > m_winSize - m_shape.getSize().x)
+			m_shape.setPosition(m_winSize - m_shape.getSize().x - 0.5, m_shape.getPosition().y);
+	}
 }
 
 sf::FloatRect & Racquet::getBox()
@@ -82,7 +70,8 @@ float Racquet::getSpeed()
 
 sf::Vector2f Racquet::getPosition()
 {
-	return sf::Vector2f(m_shape.getPosition().x + m_shape.getSize().x / 2, m_shape.getPosition().y + m_shape.getSize().y / 2);
+	return sf::Vector2f(m_shape.getPosition().x + m_shape.getSize().x/2,
+						m_shape.getPosition().y + m_shape.getSize().y/2);
 }
 
 void Racquet::setSize(sf::Vector2f size)
@@ -97,10 +86,5 @@ void Racquet::setSpeed(float speed)
 
 void Racquet::setPosition(sf::Vector2f position)
 {
-	m_shape.setPosition(position.x - m_shape.getSize().x / 2, position.y - m_shape.getSize().y / 2);
-}
-
-void Racquet::setRotation(float angle)
-{
-	m_shape.setRotation(angle);
+	m_shape.setPosition(position);
 }
