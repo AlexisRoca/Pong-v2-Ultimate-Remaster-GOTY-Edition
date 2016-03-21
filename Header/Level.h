@@ -32,7 +32,6 @@ protected:
 public:
 	// Constructor
 	Level(float size);
-	~Level();
 	
 	// Methods
 	void draw(sf::RenderWindow & window);
@@ -40,6 +39,7 @@ public:
 
 protected:
 	void buildLevel();
+	void racquetMove();
 	void restartLevel();
 	void hud(sf::RenderWindow & window);
 	void ballBound();

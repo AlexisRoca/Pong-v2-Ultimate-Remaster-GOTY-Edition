@@ -1,24 +1,20 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
+#include "RectangleObject.h"
 #include "Ball.h"
 
-class Edge
+class Edge : public RectangleObject
 {
-	private:
-		sf::RectangleShape m_shape;
-		sf::Color m_color;
-		char m_orientation;
+private:
 
-	public:
-		Edge(int size, unsigned char orientation, const sf::Color & color = sf::Color::White);
-		~Edge();
+public:
+	// Constructor
+	Edge(sf::Vector2f size, sf::Vector2f position, const sf::Color & color);
+	
+	// Methods
 
-		void setPosition(sf::Vector2f & position);
-		
-		sf::FloatRect & getBox();
-		char getOrientation();
-		sf::Vector2f getBoundDirection(Ball * ball);
-
-		void draw(sf::RenderWindow & window);
+	// Getter
+	sf::Vector2f getBoundDirection(Ball * ball);
 };
