@@ -3,27 +3,23 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
-
-class Booster
+template<class T> class Booster
 {
 protected:
-	float m_size;
-	sf::Vector2f m_position;
-
-	sf::RectangleShape m_shape;
-	sf::Texture *m_texture;
+	string m_firstTouch;
+	string m_lastTouch;
 
 public:
 	// Constructor
-	Booster(float size, sf::Vector2f position);
+	Booster();
 	// Destroyer
 	~Booster();
 
-	// Getter
-	float getSize();
-	sf::Vector2f getPosition();
+	string getFirstTouch() const;
+	string getLastTouch() const;
 
-	// Setter
-	void setSize(float size);
-	void setPosition(sf::Vector2f position);
+	void setFirstTouch(const string & racquet);
+	void setLastTouch(const string & racquet);
+
+	void effect(T & t) = 0;
 };
