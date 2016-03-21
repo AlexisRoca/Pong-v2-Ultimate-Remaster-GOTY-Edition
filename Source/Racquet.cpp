@@ -11,9 +11,11 @@ Racquet::Racquet(sf::Vector2f size, sf::Vector2f position, float speed, const sf
 sf::Vector2f Racquet::getBoundDirection(Ball * ball)
 {
 	sf::Vector2f normale = ball->getPosition() - this->getPosition();
-	normale /= sqrt(normale.x*normale.x + normale.y*normale.y);
 
-	return normale;
+	sf::Vector2f bound(normale / 2.0f - ball->getDirection());
+	bound /= sqrt(bound.x*bound.x + bound.y*bound.y);
+
+	return bound;
 }
 
 void Racquet::move(sf::Vector2f direction)
