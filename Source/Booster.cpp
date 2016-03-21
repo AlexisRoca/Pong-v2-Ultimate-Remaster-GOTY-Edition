@@ -1,31 +1,42 @@
 #include "Booster.h"
 
-
-Booster::Booster(float size, sf::Vector2f position) :
-m_size(size), m_position(position)
+template<class T>
+Booster::Booster() :
+m_firstTouch(""), m_lastTouch("")
 {
 }
 
+template<class T>
+Booster<T>::Booster()
+{
+}
+
+template<class T>
 Booster::~Booster()
 {
 }
 
-float Booster::getSize()
+template<class T>
+string Booster<T>::getFirstTouch() const
 {
-	return m_size;
+	return m_firstTouch;
 }
 
-sf::Vector2f Booster::getPosition()
+template<class T>
+string Booster<T>::getLastTouch() const
 {
-	return m_position;
+	return m_lastTouch;
 }
 
-void Booster::setSize(float size)
+template<class T>
+void Booster<T>::setFirstTouch(const string & racquet)
 {
-	m_size = size;
+	m_firstTouch = racquet;
 }
 
-void Booster::setPosition(sf::Vector2f position)
+template<class T>
+void Booster<T>::setLastTouch(const string & racquet)
 {
-	m_position = position;
+	m_lastTouch = racquet;
 }
+

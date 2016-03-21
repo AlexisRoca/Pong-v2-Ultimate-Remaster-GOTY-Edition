@@ -7,10 +7,10 @@ Control::Control()
 void Control::update()
 {
 	if (sf::Keyboard::isKeyPressed(m_up))
-		this->move(sf::Vector2f(0, 1));
+		this->move(sf::Vector2f(0, -1));
 
 	if (sf::Keyboard::isKeyPressed(m_down))
-		this->move(sf::Vector2f(0, -1));
+		this->move(sf::Vector2f(0, 1));
 	
 	if (sf::Keyboard::isKeyPressed(m_left))
 		this->move(sf::Vector2f(-1, 0));
