@@ -34,27 +34,28 @@ void Level::buildLevel()
 
 	// Init balls
 	float random = rand() % 10 - 5;
-	sf::Vector2f randomDirectionBall(rand() % 10 - 5, rand() % 10 - 5);
+	sf::Vector2f randomDirectionBall(0.5, 1);// rand() % 10 - 5, rand() % 10 - 5);
 	randomDirectionBall /= sqrt(randomDirectionBall.x*randomDirectionBall.x + randomDirectionBall.y*randomDirectionBall.y);
-	std::cout << randomDirectionBall.x << " " << randomDirectionBall.y << std::endl;
+	
+	// std::cout << randomDirectionBall.x << " " << randomDirectionBall.y << std::endl;
 	m_balls.push_back(new Ball(10, 0.1, m_centerPosition, randomDirectionBall));
 
 	// Init players
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, 50)));
-	m_players.back()->setRight(sf::Keyboard::D);
-	m_players.back()->setLeft(sf::Keyboard::Q);
-
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(50, m_size / 2)));
-	m_players.back()->setRotation(90.0);
-	m_players.back()->setUp(sf::Keyboard::Z);
-	m_players.back()->setDown(sf::Keyboard::S);
-
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, m_size - 50)));
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, 5)));
 	m_players.back()->setRight(sf::Keyboard::Right);
 	m_players.back()->setLeft(sf::Keyboard::Left);
 
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size - 50, m_size/2)));
-	m_players.back()->setRotation(90.0);
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(5, m_size/2)));
+	m_players.back()->setRotation(-90.0f);
+	m_players.back()->setUp(sf::Keyboard::Up);
+	m_players.back()->setDown(sf::Keyboard::Down);
+
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, m_size -5)));
+	m_players.back()->setRight(sf::Keyboard::Right);
+	m_players.back()->setLeft(sf::Keyboard::Left);
+
+	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size - 5, m_size/2)));
+	m_players.back()->setRotation(90.0f);
 	m_players.back()->setUp(sf::Keyboard::Up);
 	m_players.back()->setDown(sf::Keyboard::Down);
 
@@ -76,13 +77,21 @@ void Level::buildLevel()
 	m_textScores.back()->setColor(sf::Color::Green);
 	m_textScores.back()->setFont(m_font);
 	m_textScores.back()->setCharacterSize(20);
-	m_textScores.back()->setPosition(sf::Vector2f(10, 10));
 
 	m_textScores.push_back(new sf::Text());
 	m_textScores.back()->setColor(sf::Color::Green);
 	m_textScores.back()->setFont(m_font);
 	m_textScores.back()->setCharacterSize(20);
-	m_textScores.back()->setPosition(sf::Vector2f(m_size-100, m_size-50));
+	
+	m_textScores.push_back(new sf::Text());
+	m_textScores.back()->setColor(sf::Color::Green);
+	m_textScores.back()->setFont(m_font);
+	m_textScores.back()->setCharacterSize(20);
+
+	m_textScores.push_back(new sf::Text());
+	m_textScores.back()->setColor(sf::Color::Green);
+	m_textScores.back()->setFont(m_font);
+	m_textScores.back()->setCharacterSize(20);
 }
 
 void Level::draw(sf::RenderWindow & window)
@@ -114,6 +123,7 @@ void Level::hud(sf::RenderWindow & window)
 	for (int i = 0; i < m_textScores.size(); i++)
 	{
 		m_textScores[i]->setString("Player "+ std::to_string(i + 1) + " = " + std::to_string(m_scores[i]));
+		m_textScores[i]->setPosition(m_players[i]->getPosition());
 		window.draw(*m_textScores[i]);
 	}
 }
@@ -140,6 +150,23 @@ void Level::ballBound()
 			if (m_balls[j]->getBox().intersects(m_players[i]->getBox()))
 				m_balls[j]->setDirection(m_players[i]->getBoundDirection(m_balls[j]));
 
+	// Compute bounds between players and edges
+	for (int i = 0; i < m_players.size(); i++)
+		for (int j = 0; j < m_edges.size(); j++)
+			if (m_edges[j]->getBox().intersects(m_players[i]->getBox()))
+			{
+				if (m_players[i]->getPosition().x < m_size/2)
+					m_players[i]->setPosition(sf::Vector2f(m_players[i]->getSize().x/2 + 5, m_players[i]->getPosition().y)); // +5 : Epaisseur du mur -> prévoir méthode edge.getSize
+
+				if (m_players[i]->getPosition().x > m_size/2)
+					m_players[i]->setPosition(sf::Vector2f(m_size - m_players[i]->getSize().x/2 - 5 , m_players[i]->getPosition().y));
+			
+				if (m_players[i]->getPosition().y < m_size / 2)
+					m_players[i]->setPosition(sf::Vector2f(m_players[i]->getPosition().x, m_players[i]->getSize().y / 2 + 5));
+				
+				if (m_players[i]->getPosition().y > m_size / 2)
+					m_players[i]->setPosition(sf::Vector2f(m_players[i]->getPosition().x, m_size - m_players[i]->getSize().y / 2 - 5));
+			}
 
 	// Compute bounds between edges and balls
 	for(int i=0; i<m_edges.size(); i++)
@@ -147,13 +174,13 @@ void Level::ballBound()
 		{
 			if (m_balls[j]->getBox().intersects(m_edges[i]->getBox()))
 			{
-				if(m_edges[i]->getOrientation() == 'V')
-					m_balls[j]->setDirection(m_edges[i]->getBoundDirection(m_balls[j]));
-				else
-				{
+				//if(m_edges[i]->getOrientation() == 'V')
+				//	m_balls[j]->setDirection(m_edges[i]->getBoundDirection(m_balls[j]));
+				//else
+				//{
 					m_scores[i]++;
 					restartLevel();
-				}
+				//}
 			}
 		}
 }

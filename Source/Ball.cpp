@@ -68,5 +68,5 @@ void Ball::setPosition(sf::Vector2f position)
 void Ball::setDirection(sf::Vector2f direction)
 {
 	m_direction = direction;
-	m_speed *= 1.05;
+	//m_speed *= 1.05;
 }
