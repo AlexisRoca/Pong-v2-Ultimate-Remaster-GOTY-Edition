@@ -138,20 +138,25 @@
   <ItemGroup>
     <ClCompile Include="..\Source\Ball.cpp" />
     <ClCompile Include="..\Source\Booster.cpp" />
+    <ClCompile Include="..\Source\CircleObject.cpp" />
     <ClCompile Include="..\Source\Control.cpp" />
     <ClCompile Include="..\Source\Edge.cpp" />
     <ClCompile Include="..\Source\Level.cpp" />
     <ClCompile Include="..\Source\main.cpp" />
     <ClCompile Include="..\Source\Racquet.cpp" />
+    <ClCompile Include="..\Source\RectangleObject.cpp" />
     <ClCompile Include="..\Source\Resizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header\Ball.h" />
     <ClInclude Include="..\Header\Booster.h" />
+    <ClInclude Include="..\Header\CircleObject.h" />
     <ClInclude Include="..\Header\Control.h" />
     <ClInclude Include="..\Header\Edge.h" />
     <ClInclude Include="..\Header\Level.h" />
+    <ClInclude Include="..\Header\Object.h" />
     <ClInclude Include="..\Header\Racquet.h" />
+    <ClInclude Include="..\Header\RectangleObject.h" />
     <ClInclude Include="..\Header\Resizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
