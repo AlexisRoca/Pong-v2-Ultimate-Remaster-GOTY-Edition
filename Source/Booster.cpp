@@ -1,41 +1,37 @@
 #include "Booster.h"
 
 template<class T>
-Booster::Booster() :
+Booster<T>::Booster() :
 m_firstTouch(""), m_lastTouch("")
 {
 }
 
+
 template<class T>
-Booster<T>::Booster()
+Booster<T>::~Booster()
 {
 }
 
 template<class T>
-Booster::~Booster()
-{
-}
-
-template<class T>
-string Booster<T>::getFirstTouch() const
+std::string Booster<T>::getFirstTouch() const
 {
 	return m_firstTouch;
 }
 
 template<class T>
-string Booster<T>::getLastTouch() const
+std::string Booster<T>::getLastTouch() const
 {
 	return m_lastTouch;
 }
 
 template<class T>
-void Booster<T>::setFirstTouch(const string & racquet)
+void Booster<T>::setFirstTouch(const std::string & racquet)
 {
 	m_firstTouch = racquet;
 }
 
 template<class T>
-void Booster<T>::setLastTouch(const string & racquet)
+void Booster<T>::setLastTouch(const std::string & racquet)
 {
 	m_lastTouch = racquet;
 }

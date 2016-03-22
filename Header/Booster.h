@@ -6,20 +6,20 @@
 template<class T> class Booster
 {
 protected:
-	string m_firstTouch;
-	string m_lastTouch;
+	std::string m_firstTouch;
+	std::string m_lastTouch;
 
 public:
 	// Constructor
 	Booster();
 	// Destroyer
-	~Booster();
+	virtual ~Booster();
 
-	string getFirstTouch() const;
-	string getLastTouch() const;
+	std::string getFirstTouch() const;
+	std::string getLastTouch() const;
 
-	void setFirstTouch(const string & racquet);
-	void setLastTouch(const string & racquet);
+	void setFirstTouch(const std::string & racquet);
+	void setLastTouch(const std::string & racquet);
 
-	void effect(T & t) = 0;
+	//virtual void effect(T & t) = 0;
 };
