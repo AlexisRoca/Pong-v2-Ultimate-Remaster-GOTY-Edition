@@ -6,6 +6,7 @@
 #include "Racquet.h"
 #include "Ball.h"
 #include "Edge.h"
+#include "Resizer.h"
 
 class Level
 {
@@ -23,6 +24,7 @@ protected:
 	std::vector<Ball *> m_balls;
 
 	std::vector<Edge *> m_edges;
+	std::vector<Resizer *> m_boosters;
 
 	std::vector<Racquet *> m_players;
 	std::vector<sf::Texture *> m_playersTextures;

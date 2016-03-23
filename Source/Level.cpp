@@ -1,7 +1,10 @@
 #include "Level.h"
+
 #include <iostream>
 #include <Windows.h>
 #include <stdlib.h>
+
+#include "Resizer.h"
 
 const sf::Color white = sf::Color::White;
 const sf::Color black = sf::Color::Black;
@@ -11,13 +14,14 @@ const sf::Color blue = sf::Color::Blue;
 const sf::Color magenta = sf::Color::Magenta;
 
 Level::Level(float size) :
-m_size(size), 
-m_balls(), 
-m_edges(), 
-m_players(), 
-m_textScores(),
-m_ground(sf::Vector2f(size, size)),
-m_centerPosition(sf::Vector2f(size/2, size/2))
+	m_size(size), 
+	m_balls(), 
+	m_edges(), 
+	m_players(),
+	m_boosters(),
+	m_textScores(),
+	m_ground(sf::Vector2f(size, size)),
+	m_centerPosition(sf::Vector2f(size/2, size/2))
 {
 	// Init scores
 	m_scores = new int[4];
@@ -54,6 +58,9 @@ void Level::buildLevel()
 	m_edges.push_back(new Edge(sf::Vector2f(3.f, m_size), sf::Vector2f(5, m_size/2), white));
 	m_edges.push_back(new Edge(sf::Vector2f(3.f, m_size), sf::Vector2f(m_size-5, m_size/2), white));
 
+	// Add booster
+	m_boosters.push_back(new Resizer(10,10,m_centerPosition,green));
+
 	// Init texts scores
 	m_textScores.push_back(new sf::Text());
 	m_textScores.back()->setColor(sf::Color::Green);
@@ -84,6 +91,10 @@ void Level::draw(sf::RenderWindow & window)
 	// Draw all edges
 	for (int i = 0; i < m_edges.size(); i++)
 		m_edges[i]->draw(window);
+
+	// Draw all edges
+	for (int i = 0; i < m_boosters.size(); i++)
+		m_boosters[i]->draw(window);
 
 	// Draw HUD
 	hud(window);

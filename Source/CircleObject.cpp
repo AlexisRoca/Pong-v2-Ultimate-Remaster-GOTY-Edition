@@ -1,6 +1,6 @@
 #include "CircleObject.h"
 
-CircleObject::CircleObject(float size, float speed, sf::Vector2f direction, sf::Vector2f position, const sf::Color & color) :
+CircleObject::CircleObject(float size, float speed, sf::Vector2f direction, sf::Vector2f position, const sf::Color & color):
 	Object(position, color),
 	m_size(size),
 	m_speed(speed),
@@ -10,6 +10,16 @@ CircleObject::CircleObject(float size, float speed, sf::Vector2f direction, sf::
 	m_shape->setRadius(size);
 	m_shape->setPosition(position);
 	m_shape->setFillColor(color);
+}
+
+CircleObject::CircleObject(float size, sf::Vector2f position, const sf::Color & color):
+	Object(position, color),
+	m_size(size),
+	m_shape(new sf::CircleShape(size))
+{
+	m_shape->setRadius(size);
+	m_shape->setPosition(position);
+	m_shape->setFillColor(color);	
 }
 
 void CircleObject::draw(sf::RenderWindow & window)

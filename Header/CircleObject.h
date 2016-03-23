@@ -15,7 +15,8 @@ protected:
 
 public:
 	// Constructor
-	CircleObject(float size, float speed, sf::Vector2f direction, sf::Vector2f position, const sf::Color & color);
+	CircleObject(float size, float speed, sf::Vector2f direction, sf::Vector2f position, const sf::Color & color = sf::Color::White);
+	CircleObject(float size, sf::Vector2f position, const sf::Color & color = sf::Color::White);
 
 	// Methods
 	virtual void draw(sf::RenderWindow & window);

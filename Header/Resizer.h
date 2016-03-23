@@ -2,17 +2,15 @@
 #include "Booster.h"
 #include "Racquet.h"
 
-template<class Racquet>
-class Resizer : public Booster<Racquet>
+class Resizer : public Booster
 {
 private:
 	int m_resizeValue;
 
 public:
-	Resizer(int resizeValue);
+	Resizer(int resizeValue, double size, const sf::Vector2f position, const sf::Color color);
 	virtual ~Resizer();
 
 	void effect(Racquet & r);
-
 };
 
