@@ -3,27 +3,26 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
+#include "CircleObject.h"
 
-class Booster
+class Booster : public CircleObject
 {
 protected:
-	float m_size;
-	sf::Vector2f m_position;
-
-	sf::RectangleShape m_shape;
-	sf::Texture *m_texture;
+	std::string m_firstTouch;
+	std::string m_lastTouch;
 
 public:
 	// Constructor
-	Booster(float size, sf::Vector2f position);
+	Booster(double size, const sf::Vector2f position, const sf::Color color = sf::Color::White);
+
 	// Destroyer
-	~Booster();
+	virtual ~Booster();
 
-	// Getter
-	float getSize();
-	sf::Vector2f getPosition();
+	std::string getFirstTouch() const;
+	std::string getLastTouch() const;
 
-	// Setter
-	void setSize(float size);
-	void setPosition(sf::Vector2f position);
+	void setFirstTouch(const std::string & racquet);
+	void setLastTouch(const std::string & racquet);
+
+	//virtual void effect() = 0;
 };

@@ -1,31 +1,33 @@
 #include "Booster.h"
 
+Booster::Booster(double size, const sf::Vector2f position, const sf::Color color) :
+	CircleObject(size,position),
+	m_firstTouch(""),
+	m_lastTouch("")
+{}
 
-Booster::Booster(float size, sf::Vector2f position) :
-m_size(size), m_position(position)
-{
-}
+
 
 Booster::~Booster()
+{}
+
+std::string Booster::getFirstTouch() const
 {
+	return m_firstTouch;
 }
 
-float Booster::getSize()
+std::string Booster::getLastTouch() const
 {
-	return m_size;
+	return m_lastTouch;
 }
 
-sf::Vector2f Booster::getPosition()
+void Booster::setFirstTouch(const std::string & racquet)
 {
-	return m_position;
+	m_firstTouch = racquet;
 }
 
-void Booster::setSize(float size)
+void Booster::setLastTouch(const std::string & racquet)
 {
-	m_size = size;
+	m_lastTouch = racquet;
 }
 
-void Booster::setPosition(sf::Vector2f position)
-{
-	m_position = position;
-}
