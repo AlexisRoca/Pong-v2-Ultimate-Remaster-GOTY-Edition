@@ -159,6 +159,7 @@
     <ClInclude Include="..\Header\Racquet.h" />
     <ClInclude Include="..\Header\RectangleObject.h" />
     <ClInclude Include="..\Header\Resizer.h" />
+    <ClInclude Include="..\Header\UsefulFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

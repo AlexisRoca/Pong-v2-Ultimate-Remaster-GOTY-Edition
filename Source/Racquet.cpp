@@ -1,4 +1,6 @@
 #include "Racquet.h"
+
+#include "UsefulFunctions.h"
 #include <math.h>
 #include <iostream>
 
@@ -12,9 +14,12 @@ sf::Vector2f Racquet::getBoundDirection(Ball * ball)
 {
 	sf::Vector2f normale = ball->getPosition() - this->getPosition();
 
+
 	sf::Vector2f bound(normale / 2.0f - ball->getDirection());
 	bound /= sqrt(bound.x*bound.x + bound.y*bound.y);
 
+	float scalaire = scalarProduct(normale, bound);
+	
 	return bound;
 }
 
