@@ -3,37 +3,26 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include "Control.h"
 #include "Ball.h"
+#include "Control.h"
+#include "RectangleObject.h"
 
-class Racquet : public Control
+class Racquet : public RectangleObject, public Control
 {
 protected:
 	float m_speed;
-	float m_winSize;
-
-	sf::RectangleShape m_shape;
-	sf::Texture *m_texture;
 
 public:
 	// Constructor
-	Racquet(float speed, float size, sf::Vector2f position);
+	Racquet(sf::Vector2f size, sf::Vector2f position, float speed, sf::Color color);
 	
 	// Methods
-	sf::Vector2f getBoundDirection(Ball * ball);
-
-	void draw(sf::RenderWindow & window);
 	void move(sf::Vector2f direction);
 
 	// Getter
-	sf::Vector2f getSize();
 	float getSpeed();
-	sf::FloatRect & getBox();
-	sf::Vector2f getPosition();
+	sf::Vector2f getNormal(Ball * ball);
 
 	// Setter
-	void setSize(sf::Vector2f size);
 	void setSpeed(float speed);
-	void setPosition(sf::Vector2f position);
-	void setRotation(float angle);
 };

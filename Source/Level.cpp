@@ -41,48 +41,21 @@ void Level::buildLevel()
 	m_balls.push_back(new Ball(10, 0.1, m_centerPosition, randomDirectionBall));
 
 	// Init players
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, 5)));
+	m_players.push_back(new Racquet(sf::Vector2f(100.f, 20.f), sf::Vector2f(m_size/2, 20.f), 0.2f, sf::Color::Red));
 	m_players.back()->setRight(sf::Keyboard::Right);
 	m_players.back()->setLeft(sf::Keyboard::Left);
 
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(5, m_size/2)));
-	m_players.back()->setRotation(-90.0f);
-	m_players.back()->setUp(sf::Keyboard::Up);
-	m_players.back()->setDown(sf::Keyboard::Down);
-
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size/2, m_size -5)));
+	m_players.push_back(new Racquet(sf::Vector2f(100.f, 20.f), sf::Vector2f(m_size/2, m_size-20.f), 0.2f, sf::Color::Red));
 	m_players.back()->setRight(sf::Keyboard::Right);
 	m_players.back()->setLeft(sf::Keyboard::Left);
-
-	m_players.push_back(new Racquet(0.2, m_size, sf::Vector2f(m_size - 5, m_size/2)));
-	m_players.back()->setRotation(90.0f);
-	m_players.back()->setUp(sf::Keyboard::Up);
-	m_players.back()->setDown(sf::Keyboard::Down);
 
 	// Init edges
-	m_edges.push_back(new Edge(m_size, 'H'));
-	m_edges.back()->setPosition(sf::Vector2f(5,0));
-
-	m_edges.push_back(new Edge(m_size, 'H'));
-	m_edges.back()->setPosition(sf::Vector2f(5,m_size-5));
-
-	m_edges.push_back(new Edge(m_size, 'V'));
-	m_edges.back()->setPosition(sf::Vector2f(5,5));
-
-	m_edges.push_back(new Edge(m_size, 'V'));
-	m_edges.back()->setPosition(sf::Vector2f(m_size,5));
+	m_edges.push_back(new Edge(sf::Vector2f(m_size, 10.f), sf::Vector2f(m_size / 2, 5.f), sf::Color::White));
+	m_edges.push_back(new Edge(sf::Vector2f(m_size, 10.f), sf::Vector2f(m_size / 2, m_size-5.f), sf::Color::White));
+	m_edges.push_back(new Edge(sf::Vector2f(10.f, m_size), sf::Vector2f(5.f, m_size / 2), sf::Color::White));
+	m_edges.push_back(new Edge(sf::Vector2f(10.f, m_size), sf::Vector2f(m_size-5.f, m_size/2), sf::Color::White));
 
 	// Init texts scores
-	m_textScores.push_back(new sf::Text());
-	m_textScores.back()->setColor(sf::Color::Green);
-	m_textScores.back()->setFont(m_font);
-	m_textScores.back()->setCharacterSize(20);
-
-	m_textScores.push_back(new sf::Text());
-	m_textScores.back()->setColor(sf::Color::Green);
-	m_textScores.back()->setFont(m_font);
-	m_textScores.back()->setCharacterSize(20);
-	
 	m_textScores.push_back(new sf::Text());
 	m_textScores.back()->setColor(sf::Color::Green);
 	m_textScores.back()->setFont(m_font);
@@ -174,13 +147,7 @@ void Level::ballBound()
 		{
 			if (m_balls[j]->getBox().intersects(m_edges[i]->getBox()))
 			{
-				//if(m_edges[i]->getOrientation() == 'V')
-				//	m_balls[j]->setDirection(m_edges[i]->getBoundDirection(m_balls[j]));
-				//else
-				//{
-					m_scores[i]++;
-					restartLevel();
-				//}
+				m_balls[j]->setDirection(m_edges[i]->getBoundDirection(m_balls[j]));
 			}
 		}
 }
